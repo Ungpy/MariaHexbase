@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class UIControll : MonoBehaviour
+public class UIControl : MonoBehaviour
 {
     public GameObject itemUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject EquipmentUI_Prefab;
+    private GameObject EquipmentUI;
+
     private bool isitemUI;
     void Start()
     {
@@ -14,6 +17,19 @@ public class UIControll : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void CreateEquipmentUI(CharacterData charData)
+    {
+        EquipmentUI = Instantiate(EquipmentUI_Prefab);
+        EquipmentUI.GetComponent<StatusUI>().MyInitialize(charData);
+    }
+    public void DeleteEquipmentUI()
+    {
+        if (EquipmentUI)
+        {
+            Destroy(EquipmentUI);
+        }
     }
 
     public void ItemUI_Toggle()
