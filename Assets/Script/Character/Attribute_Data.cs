@@ -1,3 +1,55 @@
+using UnityEngine;
+
+public enum ClassType { attack, defense, support, magic }
+
+[System.Serializable]
+public class CharacterData
+{
+    //[SerializeField] TMP_Text HPtext;
+    [SerializeField] private int id = -1;
+    [SerializeField] private string name = "Default name";
+    [SerializeField] private ClassType classType = ClassType.attack;
+    [SerializeField] private Attribute attr = new Attribute(10f, 10f, 10f, 10f, 10f);
+
+    [SerializeField] public float currentHealth = 20f;
+    [SerializeField] private float currentMana;
+    [SerializeField] private float currentStamina;
+    [SerializeField] private float currentMood;
+    [SerializeField] private int currentLevel;
+    [SerializeField] private float currentExp;
+    [SerializeField] private float maxHealth = 40f;
+    [SerializeField] private float maxMana;
+    [SerializeField] private float maxStamina;
+    [SerializeField] private float CapExp;
+
+
+    public CharacterData(int id, string name, ClassType classType, Attribute attr)
+    {
+        this.id = id;
+        this.name = name;
+        this.classType = classType;
+        this.attr = attr;
+    }
+
+    public Attribute GetAttribute()
+    {
+        return attr;
+    }
+
+    public string Getname()
+    {
+        return name;
+    }
+    //    HPtext.text = "HP: " + attr.Get(AttributeType.HP).ToString();
+    //    HPtext.text = "Physic Damage: " + attr.Get(AttributeType.PDamage).ToString();
+    //    HPtext.text = "Magic Damage: " + attr.Get(AttributeType.MDamage).ToString();
+    //    HPtext.text = "Speed: " + attr.Get(AttributeType.Speed).ToString();
+    //    HPtext.text = "Armour: " + attr.Get(AttributeType.Armour).ToString();
+
+}
+
+public enum AttributeType { HP, MDamage, PDamage, Speed, Armour }
+
 [System.Serializable]
 public class Attribute
 {
@@ -50,4 +102,3 @@ public class Attribute
     }
 }
 
-public enum AttributeType { HP, MDamage, PDamage, Speed, Armour }

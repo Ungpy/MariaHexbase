@@ -1,23 +1,32 @@
+using System;
 using UnityEngine;
 
 public class UIControl : MonoBehaviour
 {
+    public static UIControl UIController;
     public GameObject itemUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameObject EquipmentUI_Prefab;
     private GameObject EquipmentUI;
 
     private bool isitemUI;
-    void Start()
+
+    private void Awake()
     {
-        
+        UIController = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public event Action<CharacterData> OnStatsChange;
+    public void StatsChange(CharacterData chardata)
     {
-        
+        if (OnStatsChange != null)
+        {
+            OnStatsChange(chardata);
+        }
     }
+
+
+
 
     public void CreateEquipmentUI(CharacterData charData)
     {
