@@ -31,6 +31,7 @@ public class DialogueManager : MonoBehaviour
             if (firstActive)
             {
                 firstDialogue = data;
+                firstActive = false;
             }
             if (previousData != null)
             {
