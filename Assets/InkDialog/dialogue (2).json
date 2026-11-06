@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "id": "greeting_1",
+      "speaker": "Misa",
+      "text": "hi, are you new here",
+      "jumpTo": null,
+      "choices": [
+        {
+          "text": "nope",
+          "nextNodeId": "greeting_4"
+        },
+        {
+          "text": "yes",
+          "nextNodeId": "greeting_2"
+        }
+      ]
+    },
+    {
+      "id": "greeting_2",
+      "speaker": "Misa",
+      "text": "I'm Misa and I'm here to guide you",
+      "jumpTo": null,
+      "choices": []
+    },
+    {
+      "id": "greeting_3",
+      "speaker": "Misa",
+      "text": "follow me",
+      "jumpTo": "greeting_end",
+      "choices": []
+    },
+    {
+      "id": "greeting_4",
+      "speaker": "Misa",
+      "text": "Aw,",
+      "jumpTo": null,
+      "choices": []
+    },
+    {
+      "id": "greeting_end",
+      "speaker": "Misa",
+      "text": "ok, bye hope you enjoy",
+      "jumpTo": null,
+      "choices": []
+    }
+  ]
+}

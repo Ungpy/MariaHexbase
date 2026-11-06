@@ -1,6 +1,8 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MainCharacterUI : MonoBehaviour
 {
