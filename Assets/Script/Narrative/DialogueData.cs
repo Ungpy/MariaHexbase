@@ -15,6 +15,7 @@ public class DialogueData
     public string id;
     public string speaker;
     public string text;
+    public string jumpTo;
     public DialogueData nextNode;
     public List<DialogueChoiceData> choice = new List<DialogueChoiceData>();
 }
