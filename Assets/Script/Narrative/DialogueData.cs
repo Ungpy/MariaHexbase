@@ -2,27 +2,44 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class DialogueChoiceData
 {
     public string text;
+    public string nextNodeID;
     public DialogueData nextNode;
 }
 
-[System.Serializable]
 public class DialogueData
 {
     public string id;
     public string speaker;
     public string text;
-    public string jumpTo;
+    public string jumpToID;
     public DialogueData nextNode;
-    public List<DialogueChoiceData> choice = new List<DialogueChoiceData>();
+    public List<DialogueChoiceData> choices;
 }
+
+[System.Serializable]
+public class JsonDialogueData
+{
+    public string id;
+    public string speaker;
+    public string text;
+    public string jumpTo;
+    public List<JsonDialogueChoiceData> choices; 
+}
+
+[System.Serializable]
+public class JsonDialogueChoiceData
+{
+    public string text;
+    public string nextNodeId;
+}
+
 
 [System.Serializable]
 public class DialogueList
 {
-    // ชื่อตัวแปร "nodes" ต้องตรงกับใน JSON
-    public List<DialogueData> nodes;
+    // สำหรับ Json --- ชื่อตัวแปร "nodes" ต้องตรงกับใน JSON
+    public List<JsonDialogueData> nodes;
 }
