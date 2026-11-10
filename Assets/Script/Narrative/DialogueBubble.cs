@@ -1,15 +1,18 @@
 using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueBubble : MonoBehaviour
 {
+    [SerializeField] GameObject dialogueContainer;
     [SerializeField] TMP_Text dialogueText;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private RectMask2D rectMask2D;
     private VerticalLayoutGroup VerticalLayout;
+    private DialogueData nextNode = null;
 
 
     Vector2 offset;
@@ -17,24 +20,14 @@ public class DialogueBubble : MonoBehaviour
     Vector2 startSize;
 
     private Coroutine sizedUpCoroutine;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void Awake()
     {
         //this.gameObject.SetActive(false);
-        canvasGroup = GetComponent<CanvasGroup>();
-        rectTransform = GetComponent<RectTransform>();
-        VerticalLayout = GetComponent<VerticalLayoutGroup>();
-        rectMask2D = GetComponent<RectMask2D>();
+        canvasGroup = dialogueContainer.GetComponent<CanvasGroup>();
+        rectTransform = dialogueContainer.GetComponent<RectTransform>();
+        VerticalLayout = dialogueContainer.GetComponent<VerticalLayoutGroup>();
+        rectMask2D = dialogueContainer.GetComponent<RectMask2D>();
         //canvasGroup.alpha = 0f;
         //canvasGroup.alpha = 1f;
 
@@ -123,7 +116,26 @@ public class DialogueBubble : MonoBehaviour
         //StartCoroutine(RebuildLayoutRoutine());
     }
 
-    IEnumerator RebuildLayoutRoutine()
+    public void ChoiceSetup(DialogueChoiceData choice)
+    {
+        Setup("", choice.text);
+        this.nextNode = choice.nextNode;
+    }
+
+    public void BTNClick()
+    {
+        if (nextNode != null)
+        {
+            DialogueManager.dialogueManager.RunDialogue(nextNode);
+            DialogueManager.dialogueManager.ClearChoice();
+        }
+        else
+        {
+            Debug.Log("Nextnode is null");
+        }
+    }
+
+        IEnumerator RebuildLayoutRoutine()
     {
         dialogueText.ForceMeshUpdate();
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);

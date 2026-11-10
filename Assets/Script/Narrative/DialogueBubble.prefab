@@ -308,6 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01ea2c81bfecc64baefedcafc31a204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBubble
+  dialogueContainer: {fileID: 6865439194967661963}
   dialogueText: {fileID: 7710733275607965796}
 --- !u!225 &-7178190336163699906
 CanvasGroup:

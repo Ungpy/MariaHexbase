@@ -1,19 +1,25 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager dialogueManager;
+    public static DialogueManager dialogueManager { get; private set; }
+
     [SerializeField] private GameObject DialogueContainer;
+    [SerializeField] private GameObject ChoiceContainer;
     [SerializeField] private GameObject Prefab_DialogueLine;
     [SerializeField] private DialogueBubble prefab_DialogueBubble;
+    [SerializeField] private DialogueBubble prefab_ChoiceBubble;
     [SerializeField] private TextAsset targetJsonFile;
     private Dictionary<string, DialogueData> DialogueMap;
 
     private DialogueData currentDialogue;
+    bool isInDialog = false;
+    bool isSelectingChoice = false;
 
     //DialogueData firstDialogue = null;
     private void Start()
@@ -25,6 +31,22 @@ public class DialogueManager : MonoBehaviour
     {
         if (Keyboard.current.fKey.wasPressedThisFrame){
             RunDialogue(currentDialogue);
+        }
+        if (!isSelectingChoice && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            RunDialogue(currentDialogue);
+        }
+    }
+
+    private void Awake()
+    {
+        if(dialogueManager == null)
+        {
+            dialogueManager = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -108,20 +130,58 @@ public class DialogueManager : MonoBehaviour
     }
     public void RunDialogue(DialogueData targetDialouge)
     {
+        isInDialog = true;
+
         if (targetDialouge == null)
         {
-            Debug.Log("no targetDialog");
+            EndDialogue();
+            Debug.Log("End");
             return;
         }
         Debug.Log("Run targetDialog -> " + targetDialouge.text);
+
         AddDialogueLine(targetDialouge.speaker, targetDialouge.text);
-        currentDialogue = currentDialogue.nextNode;
+
+        //if that dialogue line come with choice
+        if(targetDialouge.choices.Count != 0)
+        {
+            foreach (var item in targetDialouge.choices)
+            {
+                AddChoice(item);
+            }
+        }
+
+        currentDialogue = targetDialouge.nextNode;
+    }
+
+    public void EndDialogue()
+    {
+        foreach (Transform child in DialogueContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        isInDialog = false;
     }
 
     public void AddDialogueLine(string speaker, string text)
     {
         DialogueBubble dialogueBubble = Instantiate(prefab_DialogueBubble, DialogueContainer.transform);
         dialogueBubble.Setup(speaker, text);
+    }
+
+    public void AddChoice(DialogueChoiceData choice)
+    {
+        isSelectingChoice = true;
+        DialogueBubble dialogueBubble = Instantiate(prefab_ChoiceBubble, ChoiceContainer.transform);
+        dialogueBubble.ChoiceSetup(choice);
+    }
+    public void ClearChoice()
+    {
+        foreach (Transform child in ChoiceContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        isSelectingChoice = false;
     }
 
     public void DebugPrintDialogue(DialogueData startDialogue)

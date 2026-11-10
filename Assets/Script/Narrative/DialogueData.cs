@@ -5,7 +5,6 @@ using UnityEngine;
 public class DialogueChoiceData
 {
     public string text;
-    public string nextNodeID;
     public DialogueData nextNode;
 }
 
