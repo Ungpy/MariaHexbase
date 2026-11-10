@@ -1,24 +1,37 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
 
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager dialogueManager;
     [SerializeField] private GameObject DialogueContainer;
     [SerializeField] private GameObject Prefab_DialogueLine;
     [SerializeField] private DialogueBubble prefab_DialogueBubble;
-    [SerializeField] private TextAsset jsonFile;
+    [SerializeField] private TextAsset targetJsonFile;
     private Dictionary<string, DialogueData> DialogueMap;
 
-    DialogueData firstDialogue = null;
+    private DialogueData currentDialogue;
+
+    //DialogueData firstDialogue = null;
     private void Start()
     {
-        PrepareDialogue();
-        PrintDialogue();
+        currentDialogue = PrepareDialogue(targetJsonFile);
     }
-    public DialogueData PrepareDialogue()
+
+    private void Update()
     {
+        if (Keyboard.current.fKey.wasPressedThisFrame){
+            RunDialogue(currentDialogue);
+        }
+    }
+
+    //input = JsonFile / Output = head of dialogue linklist
+    public DialogueData PrepareDialogue(TextAsset jsonFile)
+    {
+        DialogueData firstDialogue = null;
         DialogueList allNodes = JsonUtility.FromJson<DialogueList>(jsonFile.text);
         bool firstActive = true;
 
@@ -86,26 +99,23 @@ public class DialogueManager : MonoBehaviour
             item.Key.nextNode = TempAllDialogueRef[item.Value];
         }
 
-        return null;
-    }
 
-    public void PrintDialogue()
-    {
-
-        if (firstDialogue != null)
+        if(firstDialogue == null)
         {
-            Debug.Log("first = " + firstDialogue.text);
-            AddDialogueLine(firstDialogue.speaker, firstDialogue.text);
-            DialogueData nextNode = firstDialogue.nextNode;
-
-            while (nextNode != null)
-            {
-                Debug.Log(nextNode.text);
-                AddDialogueLine(nextNode.speaker, nextNode.text);
-                nextNode = nextNode.nextNode;
-                
-            }
+            Debug.Log("first Dialogue Link is null????");
         }
+        return firstDialogue;
+    }
+    public void RunDialogue(DialogueData targetDialouge)
+    {
+        if (targetDialouge == null)
+        {
+            Debug.Log("no targetDialog");
+            return;
+        }
+        Debug.Log("Run targetDialog -> " + targetDialouge.text);
+        AddDialogueLine(targetDialouge.speaker, targetDialouge.text);
+        currentDialogue = currentDialogue.nextNode;
     }
 
     public void AddDialogueLine(string speaker, string text)
@@ -113,4 +123,27 @@ public class DialogueManager : MonoBehaviour
         DialogueBubble dialogueBubble = Instantiate(prefab_DialogueBubble, DialogueContainer.transform);
         dialogueBubble.Setup(speaker, text);
     }
+
+    public void DebugPrintDialogue(DialogueData startDialogue)
+    {
+
+        if (startDialogue == null)
+        {
+            Debug.Log("Error!? startDialogue is null");
+            return;
+        }
+
+        //Debug.Log("first = " + startDialogue.text);
+        AddDialogueLine(startDialogue.speaker, startDialogue.text);
+        DialogueData nextNode = startDialogue.nextNode;
+
+        while (nextNode != null)
+        {
+            Debug.Log(nextNode.text);
+            AddDialogueLine(nextNode.speaker, nextNode.text);
+            nextNode = nextNode.nextNode;
+        }
+    }
+
+
 }
