@@ -130,14 +130,16 @@ public class DialogueManager : MonoBehaviour
     }
     public void RunDialogue(DialogueData targetDialouge)
     {
-        isInDialog = true;
 
         if (targetDialouge == null)
         {
             EndDialogue();
+            isInDialog = false;
             Debug.Log("End");
             return;
         }
+
+        isInDialog = true;
         Debug.Log("Run targetDialog -> " + targetDialouge.text);
 
         AddDialogueLine(targetDialouge.speaker, targetDialouge.text);
