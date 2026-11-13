@@ -3,7 +3,7 @@ using UnityEngine;
 public class StatsManager : MonoBehaviour
 {
     public static StatsManager Instance;
-    Attribute attr;
+    AttributeData attr;
     void Start()
     {
         

@@ -14,13 +14,13 @@ public class MainCharacterUI : MonoBehaviour
     [SerializeField] TMP_Text LevelTxt;
     [SerializeField] TMP_Text ExpTxt;
 
-    //[SerializeField] CharacterData characterActor;
-    //[SerializeField] Attribute attr;
+    [SerializeField] MainCharacter mainCharacter;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //ฟังว่าถ้ามี OnStatsChange มาก็ให้ทำ RefreshText
-        UIControl.UIController.OnStatsChange += RefreshText;
+        mainCharacter.OnStatChange += RefreshText;
     }
 
     // Update is called once per frame
@@ -37,12 +37,12 @@ public class MainCharacterUI : MonoBehaviour
     private void RefreshText(CharacterData charData)
     {
         NameTxt.text = charData.Getname();
-        //HPTxt.text = "Health  " + charData.Get(AttributeType.HP).ToString();
-        //MPTxt.text = "Mana   " + attr.Get(AttributeType.PDamage).ToString();
-        //StaminaTxt.text = "Stamina " + attr.Get(AttributeType.MDamage).ToString();
-        //MoodTxt.text = "Mood   " + attr.Get(AttributeType.Speed).ToString();
-        //LevelTxt.text = "Level " + attr.Get(AttributeType.Armour).ToString();
-        //ExpTxt.text = "Exp " + attr.Get(AttributeType.Armour).ToString();
+        HPTxt.text = "Health  " + charData.Health.Current.ToString() + "/" + charData.Health.Max.ToString();
+        MPTxt.text = "Mana   " + charData.Mana.Current.ToString() + "/" + charData.Mana.Max.ToString();
+        StaminaTxt.text = "Stamina " + charData.Stamina.Current.ToString() + "/" + charData.Stamina.Max.ToString();
+        MoodTxt.text = "Mood   " + charData.Mood.Current.ToString() + "/" + charData.Mood.Max.ToString();
+        //LevelTxt.text = "Level " + charData.leve
+        //ExpTxt.text = "Exp " + charData.Health.Current.ToString();
     }
 
     public void MyInitialize(CharacterData refCharActor)

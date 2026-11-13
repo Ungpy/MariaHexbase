@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum ClassType { attack, defense, support, magic }
@@ -5,25 +6,28 @@ public enum ClassType { attack, defense, support, magic }
 [System.Serializable]
 public class CharacterData
 {
-    //[SerializeField] TMP_Text HPtext;
     [SerializeField] private int id = -1;
     [SerializeField] private string name = "Default name";
     [SerializeField] private ClassType classType = ClassType.attack;
-    [SerializeField] private Attribute attr = new Attribute(10f, 10f, 10f, 10f, 10f);
+    [SerializeField] private AttributeData attr = new AttributeData(10f, 10f, 10f, 10f, 10f);
 
-    [SerializeField] public float currentHealth = 20f;
-    [SerializeField] private float currentMana;
-    [SerializeField] private float currentStamina;
-    [SerializeField] private float currentMood;
-    [SerializeField] private int currentLevel;
+    [SerializeField] private StatData health = new StatData(20f,40f);
+    [SerializeField] private StatData mana = new StatData(30f,120f);
+    [SerializeField] private StatData stamina = new StatData(10f,20f);
+    [SerializeField] private StatData mood = new StatData(50f,60f);
+
+    public StatData Health => health;
+    public StatData Mana => mana;
+    public StatData Stamina => stamina;
+    public StatData Mood => mood;
+
+    //------------------------------------------
     [SerializeField] private float currentExp;
-    [SerializeField] private float maxHealth = 40f;
-    [SerializeField] private float maxMana;
-    [SerializeField] private float maxStamina;
-    [SerializeField] private float CapExp;
+    [SerializeField] private float capExp;
+    [SerializeField] private int currentLevel;
 
 
-    public CharacterData(int id, string name, ClassType classType, Attribute attr)
+    public CharacterData(int id, string name, ClassType classType, AttributeData attr)
     {
         this.id = id;
         this.name = name;
@@ -31,7 +35,7 @@ public class CharacterData
         this.attr = attr;
     }
 
-    public Attribute GetAttribute()
+    public AttributeData GetAttribute()
     {
         return attr;
     }
@@ -51,16 +55,16 @@ public class CharacterData
 public enum AttributeType { HP, MDamage, PDamage, Speed, Armour }
 
 [System.Serializable]
-public class Attribute
+public class AttributeData
 {
-    public float health; 
-    public float pDamage;
-    public float mDamage;
-    public float speed;
-    public float armour;
+    public float health = 0f; 
+    public float pDamage = 0f;
+    public float mDamage = 0f;
+    public float speed = 0f;
+    public float armour = 0f;
 
         //ตรงนี้คือ constructor มันจะไป assign ค่าให้ struct อัตโนมันตอนเราสร้าง Stat(1,2,1,2,1) งี้
-    public Attribute(float health, float PDamage, float MDamage, float Speed, float Armour)
+    public AttributeData(float health, float PDamage, float MDamage, float Speed, float Armour)
     {
         this.health = health;
         this.pDamage = PDamage;
@@ -68,7 +72,7 @@ public class Attribute
         this.speed = Speed;
         this.armour = Armour;
     }
-    public Attribute(Attribute clone)
+    public AttributeData(AttributeData clone)
     {
         this.health = clone.health;
         this.pDamage = clone.pDamage;
@@ -98,6 +102,36 @@ public class Attribute
             case AttributeType.MDamage: mDamage = value; break;
             case AttributeType.Speed: speed = value; break;
             case AttributeType.Armour: armour = value; break;
+        }
+    }
+}
+
+[System.Serializable]
+public class StatData
+{
+    [SerializeField] private float current;
+    [SerializeField] private float max;
+
+    public float Current => current;
+    public float Max => max;
+
+    public StatData(float current, float max)
+    {
+        this.current = current;
+        this.max = max;
+    }
+
+    public void ModifyValue(float amount)
+    {
+        max += Mathf.Clamp(current + amount, 0f, max);
+    }
+
+    public void SetMaxValue(float amount)
+    {
+        max = Mathf.Max(0f, amount);
+        if(current > max)
+        {
+            current = max;
         }
     }
 }

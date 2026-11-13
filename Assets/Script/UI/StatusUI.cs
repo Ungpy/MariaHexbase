@@ -11,7 +11,7 @@ public class StatusUI : MonoBehaviour
     [SerializeField] TMP_Text ArmourText;
 
     [SerializeField] CharacterData characterActor;
-    [SerializeField] Attribute attr;
+    [SerializeField] AttributeData attr;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

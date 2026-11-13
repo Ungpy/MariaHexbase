@@ -3248,6 +3248,7 @@ MonoBehaviour:
   MoodTxt: {fileID: 456299143}
   LevelTxt: {fileID: 552267893}
   ExpTxt: {fileID: 531962965}
+  mainCharacter: {fileID: 1686175439}
 --- !u!1 &1391982775
 GameObject:
   m_ObjectHideFlags: 0
@@ -4748,7 +4749,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7e21b379364174b85b37a33174614b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterActor
-  uiController: {fileID: 32062340}
 --- !u!60 &2132407276
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5126,7 +5126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7095372502881417453, guid: 47f3b0ae740d7ba43ac78a54098011f4, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 121.31
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7095372502881417453, guid: 47f3b0ae740d7ba43ac78a54098011f4, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -5255,6 +5255,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 210111166}
     m_Modifications:
+    - target: {fileID: 3432329174424217521, guid: fdd0d8135368a90469e180acb4763ea3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7826949717507848784, guid: fa84c9d2705ca1148bf307ce714ffa25, type: 3}
     - target: {fileID: 7752709208002684967, guid: fdd0d8135368a90469e180acb4763ea3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

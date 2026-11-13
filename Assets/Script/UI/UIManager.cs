@@ -1,29 +1,35 @@
 using System;
 using UnityEngine;
 
-public class UIControl : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
-    public static UIControl UIController;
+    public static UIManager Instance;
     public GameObject itemUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameObject EquipmentUI_Prefab;
     private GameObject EquipmentUI;
+    private MainCharacter mainCharacter;
 
     private bool isitemUI;
 
     private void Awake()
     {
-        UIController = this;
+        Instance = this;
+    }
+    private void Start()
+    {
+        //mainCharacter.OnStatChange += ;
     }
 
-    public event Action<CharacterData> OnStatsChange;
-    public void StatsChange(CharacterData chardata)
-    {
-        if (OnStatsChange != null)
-        {
-            OnStatsChange(chardata);
-        }
-    }
+    //public event Action<CharacterData> OnStatsChange;
+    //public void StatsChange(CharacterData chardata)
+    //{
+    //    //ถ้ามีฟังก์ชั่นที่ฟังอยู่
+    //    if (OnStatsChange != null)
+    //    {
+    //        OnStatsChange(chardata);
+    //    }
+    //}
 
 
 

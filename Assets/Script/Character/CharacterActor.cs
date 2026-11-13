@@ -5,11 +5,10 @@ using UnityEngine;
 public class CharacterActor : MonoBehaviour
 {
     private CharacterData charData;
-    [SerializeField] private UIControl uiController;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        charData = new CharacterData(-1, "Misa", ClassType.magic, new Attribute(20f, 2f, 4f, 2f, 1f));
+        //charData = new CharacterData(-1, "Misa", ClassType.magic, new Attribute(20f, 2f, 4f, 2f, 1f));
     }
 
     // Update is called once per frame
@@ -20,11 +19,11 @@ public class CharacterActor : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        uiController.CreateEquipmentUI(charData);
+        UIManager.Instance.CreateEquipmentUI(charData);
     }
 
     private void OnMouseExit()
     {
-        uiController.DeleteEquipmentUI();
+        UIManager.Instance.DeleteEquipmentUI();
     }
 }
