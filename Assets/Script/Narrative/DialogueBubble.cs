@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class DialogueBubble : MonoBehaviour
 {
-    [SerializeField] GameObject dialogueContainer;
+    //[SerializeField] GameObject dialogueContainer;
     [SerializeField] TMP_Text dialogueText;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
@@ -23,13 +23,10 @@ public class DialogueBubble : MonoBehaviour
 
     private void Awake()
     {
-        //this.gameObject.SetActive(false);
-        canvasGroup = dialogueContainer.GetComponent<CanvasGroup>();
-        rectTransform = dialogueContainer.GetComponent<RectTransform>();
-        VerticalLayout = dialogueContainer.GetComponent<VerticalLayoutGroup>();
-        rectMask2D = dialogueContainer.GetComponent<RectMask2D>();
-        //canvasGroup.alpha = 0f;
-        //canvasGroup.alpha = 1f;
+        canvasGroup = gameObject.GetComponent<CanvasGroup>();
+        rectTransform = gameObject.GetComponent<RectTransform>();
+        VerticalLayout = gameObject.GetComponent<VerticalLayoutGroup>();
+        rectMask2D = gameObject.GetComponent<RectMask2D>();
 
     }
 

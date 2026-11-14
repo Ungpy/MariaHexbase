@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Unity.AppUI.UI;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -9,6 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject EquipmentUI_Prefab;
     private GameObject EquipmentUI;
     private MainCharacter mainCharacter;
+    [SerializeField] private Dictionary<EMenuBtn, GameObject> menuButtonDict = new Dictionary<EMenuBtn, GameObject>();
 
     private bool isitemUI;
 
@@ -61,7 +64,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UI_Toggle(GameObject targetUI)
+    public void MenuToggle(EMenuBtn role)
+    {
+        UI_Toggle(menuButtonDict[role]);
+    }
+
+    private void UI_Toggle(GameObject targetUI)
     {
         if (targetUI == null)
         {
