@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 19.910007, y: -30}
+  m_AnchoredPosition: {x: 73.009995, y: -30.805}
   m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3596248564584050317
@@ -216,7 +216,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 272.66998, y: -60.000122}
-  m_SizeDelta: {x: 92.92, y: 60}
+  m_SizeDelta: {x: 146.01999, y: 61.61}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &8573220179008340485
 CanvasRenderer:
@@ -309,6 +309,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBubble
   dialogueText: {fileID: 7710733275607965796}
+  sizedUp_style: 1
+  textAppear_style: 1
 --- !u!225 &-7178190336163699906
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -333,5 +335,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
-  m_Padding: {x: 0, y: 0, z: 146.01999, w: 0}
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}

@@ -17,6 +17,8 @@ public class TextBubble : MonoBehaviour
     private RectMask2D rectMask2D;
     private VerticalLayoutGroup VerticalLayout;
     //private DialogueData nextNode = null;
+    [SerializeField] private int sizedUp_style = 1;
+    [SerializeField] private int textAppear_style = 1;
 
 
     Vector2 offset;
@@ -57,16 +59,20 @@ public class TextBubble : MonoBehaviour
     public IEnumerator SizedUp(string text)
     {
         float elapsed = 0f;
-        float resizeDuration = 0.1f;
-        int animationStyle = 1;
+        float resizeDuration = 0.2f;
+        
 
-        if (animationStyle == 0)
+        if (sizedUp_style == 0) //intance
         {
             startSize = rectTransform.sizeDelta;
         }
-        else if (animationStyle == 1)
+        else if (sizedUp_style == 1) //pop up
         {
             startSize = new Vector2(preferredSize.x, 0f);
+        }
+        else if (sizedUp_style == 2) //pop up
+        {
+            startSize = new Vector2(0f, preferredSize.y);
         }
         else
         {
@@ -100,6 +106,20 @@ public class TextBubble : MonoBehaviour
 
         float elapsed = 0f;
         float resizeDuration = 0.2f;
+        if(textAppear_style == 0)
+        {
+            resizeDuration = 0f;
+        } 
+        else if (textAppear_style == 1)
+        {
+            resizeDuration = 0.2f;
+        }
+        else
+        {
+
+        }
+
+
 
         while (elapsed < resizeDuration)
         {

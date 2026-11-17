@@ -18,24 +18,31 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextAsset targetJsonFile;
     private Dictionary<string, DialogueData> DialogueMap;
 
-    private DialogueData currentDialogue;
+    private DialogueLine currentDialogueLine;
+    private DialogueData nextDialogue;
     bool isInDialog = false;
     bool isSelectingChoice = false;
 
     //DialogueData firstDialogue = null;
     private void Start()
     {
-        currentDialogue = PrepareDialogue(targetJsonFile);
+        nextDialogue = PrepareDialogue(targetJsonFile);
+
+        foreach (Transform child in DialogueContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in ChoiceContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     private void Update()
     {
-        if (Keyboard.current.fKey.wasPressedThisFrame){
-            RunDialogue(currentDialogue);
-        }
         if (!isSelectingChoice && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            RunDialogue(currentDialogue);
+            RunDialogue(nextDialogue);
         }
     }
 
@@ -140,6 +147,13 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        if(currentDialogueLine != null)
+        {
+            currentDialogueLine.FadeDown();
+        }
+
+
+
         isInDialog = true;
         Debug.Log("Run targetDialog -> " + targetDialouge.text);
 
@@ -154,7 +168,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        currentDialogue = targetDialouge.nextNode;
+        nextDialogue = targetDialouge.nextNode;
     }
 
     public void EndDialogue()
@@ -168,8 +182,8 @@ public class DialogueManager : MonoBehaviour
 
     public void AddDialogueLine(string speaker, string text)
     {
-        DialogueLine dialoguLine = Instantiate(prefab_DialogueLine, DialogueContainer.transform);
-        dialoguLine.Setup(speaker, text);
+        currentDialogueLine = Instantiate(prefab_DialogueLine, DialogueContainer.transform);
+        currentDialogueLine.Setup(speaker, text);
     }
 
     public void AddChoice(DialogueChoiceData choice)
