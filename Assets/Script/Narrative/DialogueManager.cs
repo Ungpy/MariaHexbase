@@ -12,8 +12,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject DialogueContainer;
     [SerializeField] private GameObject ChoiceContainer;
     [SerializeField] private GameObject Prefab_DialogueLine;
-    [SerializeField] private DialogueBubble prefab_DialogueBubble;
-    [SerializeField] private DialogueBubble prefab_ChoiceBubble;
+    //Ehat???
+    [SerializeField] private DialogueLine prefab_DialogueLine;
+    [SerializeField] private DialogueChoice prefab_DialogueChoice;
     [SerializeField] private TextAsset targetJsonFile;
     private Dictionary<string, DialogueData> DialogueMap;
 
@@ -167,15 +168,15 @@ public class DialogueManager : MonoBehaviour
 
     public void AddDialogueLine(string speaker, string text)
     {
-        DialogueBubble dialogueBubble = Instantiate(prefab_DialogueBubble, DialogueContainer.transform);
-        dialogueBubble.Setup(speaker, text);
+        DialogueLine dialoguLine = Instantiate(prefab_DialogueLine, DialogueContainer.transform);
+        dialoguLine.Setup(speaker, text);
     }
 
     public void AddChoice(DialogueChoiceData choice)
     {
         isSelectingChoice = true;
-        DialogueBubble dialogueBubble = Instantiate(prefab_ChoiceBubble, ChoiceContainer.transform);
-        dialogueBubble.ChoiceSetup(choice);
+        DialogueChoice dialogueChoice = Instantiate(prefab_DialogueChoice, ChoiceContainer.transform);
+        dialogueChoice.Setup(choice);
     }
     public void ClearChoice()
     {

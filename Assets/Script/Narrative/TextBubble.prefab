@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 19.910007, y: -30}
-  m_SizeDelta: {x: 106.02, y: 40}
+  m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3596248564584050317
 CanvasRenderer:
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: -7178190336163699906}
   - component: {fileID: 2608001818843873731}
   m_Layer: 5
-  m_Name: DialogueBubble
+  m_Name: TextBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,5 +333,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
-  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Padding: {x: 0, y: 0, z: 146.01999, w: 0}
   m_Softness: {x: 0, y: 0}

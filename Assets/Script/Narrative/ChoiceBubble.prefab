@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 962004941965977008}
   - component: {fileID: 1044181947483441733}
   - component: {fileID: 3236486309287006190}
+  - component: {fileID: 4904709854833969492}
   m_Layer: 5
   m_Name: ChoiceBubble
   m_TagString: Untagged
@@ -294,7 +295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01ea2c81bfecc64baefedcafc31a204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBubble
-  dialogueContainer: {fileID: 9034805247881800215}
   dialogueText: {fileID: 1801800567128497804}
 --- !u!225 &962004941965977008
 CanvasGroup:
@@ -378,3 +378,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4904709854833969492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9034805247881800215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6693f652cefb34d8a9650443d1c789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueChoice
+  textbox: {fileID: 0}

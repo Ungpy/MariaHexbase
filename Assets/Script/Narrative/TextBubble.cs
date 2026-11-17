@@ -4,7 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueBubble : MonoBehaviour
+//#if UNITY_EDITOR
+//using UnityEditor;
+//#endif
+
+public class TextBubble : MonoBehaviour
 {
     //[SerializeField] GameObject dialogueContainer;
     [SerializeField] TMP_Text dialogueText;
@@ -12,7 +16,7 @@ public class DialogueBubble : MonoBehaviour
     private RectTransform rectTransform;
     private RectMask2D rectMask2D;
     private VerticalLayoutGroup VerticalLayout;
-    private DialogueData nextNode = null;
+    //private DialogueData nextNode = null;
 
 
     Vector2 offset;
@@ -28,6 +32,26 @@ public class DialogueBubble : MonoBehaviour
         VerticalLayout = gameObject.GetComponent<VerticalLayoutGroup>();
         rectMask2D = gameObject.GetComponent<RectMask2D>();
 
+    }
+
+    [ContextMenu("FitText")]
+    private void SetSize()
+    {
+        //Awake();
+        //Setup(dialogueText.text);
+
+        canvasGroup = gameObject.GetComponent<CanvasGroup>();
+        rectTransform = gameObject.GetComponent<RectTransform>();
+        VerticalLayout = gameObject.GetComponent<VerticalLayoutGroup>();
+        rectMask2D = gameObject.GetComponent<RectMask2D>();
+
+        Vector2 tmpSize = dialogueText.GetPreferredValues(dialogueText.text); ;
+        offset = new Vector2(VerticalLayout.padding.left + VerticalLayout.padding.right, VerticalLayout.padding.top + VerticalLayout.padding.bottom); ;
+        preferredSize = tmpSize + offset;
+
+
+        rectTransform.sizeDelta = preferredSize;
+        rectMask2D.padding = new Vector4(0f, 0f, 0f, 0f);
     }
 
     public IEnumerator SizedUp(string text)
@@ -93,7 +117,7 @@ public class DialogueBubble : MonoBehaviour
 
 
 
-    public void Setup(string speaker, string text)
+    public void Setup(string text)
     {
         //set up size of element (dialogue bubble)
         Vector2 tmpSize = dialogueText.GetPreferredValues(text); ;
@@ -103,44 +127,33 @@ public class DialogueBubble : MonoBehaviour
 
         dialogueText.text = text;
         rectMask2D.padding = new Vector4(0f, 0f, preferredSize.x, 0f);
+        //Done setup
 
+        //Start Sizing up
         if (sizedUpCoroutine != null)
         {
             StopCoroutine(sizedUpCoroutine);
         }
         sizedUpCoroutine = StartCoroutine(SizedUp(text));
-
-        //StartCoroutine(RebuildLayoutRoutine());
     }
 
-    public void ChoiceSetup(DialogueChoiceData choice)
-    {
-        Setup("", choice.text);
-        this.nextNode = choice.nextNode;
-    }
+    //public void ChoiceSetup(DialogueChoiceData choice)
+    //{
+    //    Setup("", choice.text);
+    //    this.nextNode = choice.nextNode;
+    //}
 
-    public void BTNClick()
-    {
-        if (nextNode != null)
-        {
-            DialogueManager.dialogueManager.RunDialogue(nextNode);
-            DialogueManager.dialogueManager.ClearChoice();
-        }
-        else
-        {
-            Debug.Log("Nextnode is null");
-        }
-    }
+    //public void BTNClick()
+    //{
+    //    if (nextNode != null)
+    //    {
+    //        DialogueManager.dialogueManager.RunDialogue(nextNode);
+    //        DialogueManager.dialogueManager.ClearChoice();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Nextnode is null");
+    //    }
+    //}
 
-        IEnumerator RebuildLayoutRoutine()
-    {
-        dialogueText.ForceMeshUpdate();
-        LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
-
-        yield return new WaitForEndOfFrame();
-
-        canvasGroup.alpha = 1f;
-
-
-    }
 }
