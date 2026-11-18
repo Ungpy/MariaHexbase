@@ -5,17 +5,32 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class CharSprite : MonoBehaviour
 {
-    private Vector2 endPosition = new Vector2(7.27f, -2.2159f);
-    private Vector2 startPosition = new Vector2(11f, -2.2159f);
+    private Vector2 endPosition0 = new Vector2(7.27f, -2.2f);
+    private Vector2 startPosition0 = new Vector2(11f, -2.2f);
+
+    private Vector2 endPosition1 = new Vector2(-6.9f, -2.2f);
+    private Vector2 startPosition1 = new Vector2(-10.6f, -2.2f);
     public GameObject character ;
-    [SerializeField] private int posIndex;
+    [SerializeField] private int posIndex = 0;
     [SerializeField] private AnimationCurve animC;
 
     float currentPercent;
     bool isKey = false;
     void Start()
     {
-        character.transform.position = startPosition;
+        switch (posIndex)
+        {
+            case 0:
+                character.transform.position = startPosition0;
+                break;
+            case 1:
+                character.transform.position = startPosition1;
+                break;
+            default:
+                character.transform.position = new Vector2();
+                break;
+        }
+        //character.transform.position = startPosition;
     }
 
     void Update()
@@ -28,6 +43,26 @@ public class CharSprite : MonoBehaviour
 
     public void PlayAnimation(EDialogueSpriteAnim anim)
     {
+        Vector2 startPosition;
+        Vector2 endPosition;
+
+
+        switch (posIndex)
+        {
+            case 0:
+                startPosition = startPosition0;
+                endPosition = endPosition0;
+                break;
+            case 1:
+                startPosition = startPosition1;
+                endPosition = endPosition1;
+                break;
+            default:
+                startPosition = new Vector2();
+                endPosition = new Vector2();
+                break;
+        }
+
         switch (anim)
         {
             case EDialogueSpriteAnim.SlideIn :

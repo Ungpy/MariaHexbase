@@ -8,8 +8,6 @@ using UnityEngine.PlayerLoop;
 
 public class DialogueManager : MonoBehaviour
 {
-
-
     public static DialogueManager dialogueManager { get; private set; }
 
     [SerializeField] private CharSprite rightSpeakerSprite;
@@ -22,9 +20,14 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private DialogueLine prefab_DialogueLine;
     [SerializeField] private DialogueChoice prefab_DialogueChoice;
     [SerializeField] private TextAsset targetJsonFile;
-    private Dictionary<string, DialogueData> DialogueMap;
+    //private Dictionary<string, DialogueData> DialogueMap;
 
-    [SerializeField] private Dictionary<string, EDialogueSpriteAnim> DAnimMap; //ไปเพิ่มในหน้า inspcetor ด้วยตัวเองถ้าเพิ่ม enum ใหม่มา
+
+    private Dictionary<string, EDialogueSpriteAnim> DAnimMap = new Dictionary<string, EDialogueSpriteAnim>() {
+        {"shake", EDialogueSpriteAnim.Shake},
+        {"jump", EDialogueSpriteAnim.Jump},
+    }; //ไปเพิ่มในหน้า inspcetor ด้วยตัวเองถ้าเพิ่ม enum ใหม่มา
+
 
     private DialogueLine currentDialogueLine;
     private DialogueData nextDialogue;
@@ -44,6 +47,7 @@ public class DialogueManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
 
         //RunDialogue(targetJsonFile);
     }
@@ -75,6 +79,7 @@ public class DialogueManager : MonoBehaviour
 
         UIManager.Instance.Toggle_UI(EMainUI.MainMenu, false, 0.5f);
         rightSpeakerSprite.PlayAnimation(EDialogueSpriteAnim.SlideIn);
+        leftSpeakerSprite.PlayAnimation(EDialogueSpriteAnim.SlideIn);
 
         NextDialogue(PrepareDialogue(jsonFile));
     }
@@ -174,7 +179,7 @@ public class DialogueManager : MonoBehaviour
 
         Debug.Log("Run targetDialog -> " + targetDialouge.text);
 
-        AddDialogueLine(targetDialouge.speaker, targetDialouge.text);
+        AddDialogueLine(targetDialouge.speaker, targetDialouge.text, targetDialouge.posIndex);
 
         //if that dialogue line come with choice
         if(targetDialouge.choices.Count != 0)
@@ -204,6 +209,7 @@ public class DialogueManager : MonoBehaviour
         isInDialog = false;
 
         rightSpeakerSprite.PlayAnimation(EDialogueSpriteAnim.SlideOut);
+        leftSpeakerSprite.PlayAnimation(EDialogueSpriteAnim.SlideOut);
         UIManager.Instance.Toggle_UI(EMainUI.MainMenu, true, 0.5f);
 
         foreach (Transform child in DialogueContainer.transform)
@@ -212,10 +218,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void AddDialogueLine(string speaker, string text)
+    public void AddDialogueLine(string speaker, string text, int posIndex)
     {
         currentDialogueLine = Instantiate(prefab_DialogueLine, DialogueContainer.transform);
-        currentDialogueLine.Setup(speaker, text);
+        currentDialogueLine.Setup(speaker, text, posIndex);
     }
 
     public void AddChoice(DialogueChoiceData choice)
@@ -232,26 +238,26 @@ public class DialogueManager : MonoBehaviour
         isSelectingChoice = false;
     }
 
-    public void DebugPrintDialogue(DialogueData startDialogue)
-    {
+    //public void DebugPrintDialogue(DialogueData startDialogue)
+    //{
 
-        if (startDialogue == null)
-        {
-            Debug.Log("Error!? startDialogue is null");
-            return;
-        }
+    //    if (startDialogue == null)
+    //    {
+    //        Debug.Log("Error!? startDialogue is null");
+    //        return;
+    //    }
 
-        //Debug.Log("first = " + startDialogue.text);
-        AddDialogueLine(startDialogue.speaker, startDialogue.text);
-        DialogueData nextNode = startDialogue.nextNode;
+    //    //Debug.Log("first = " + startDialogue.text);
+    //    AddDialogueLine(startDialogue.speaker, startDialogue.text);
+    //    DialogueData nextNode = startDialogue.nextNode;
 
-        while (nextNode != null)
-        {
-            Debug.Log(nextNode.text);
-            AddDialogueLine(nextNode.speaker, nextNode.text);
-            nextNode = nextNode.nextNode;
-        }
-    }
+    //    while (nextNode != null)
+    //    {
+    //        Debug.Log(nextNode.text);
+    //        AddDialogueLine(nextNode.speaker, nextNode.text);
+    //        nextNode = nextNode.nextNode;
+    //    }
+    //}
 
 
 }
