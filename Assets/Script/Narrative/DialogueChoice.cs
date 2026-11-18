@@ -15,7 +15,7 @@ public class DialogueChoice : MonoBehaviour
     {
         if (nextNode != null)
         {
-            DialogueManager.dialogueManager.RunDialogue(nextNode);
+            DialogueManager.dialogueManager.NextDialogue(nextNode);
             DialogueManager.dialogueManager.ClearChoice();
         }
         else

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,7 +8,12 @@ using UnityEngine.PlayerLoop;
 
 public class DialogueManager : MonoBehaviour
 {
+
+
     public static DialogueManager dialogueManager { get; private set; }
+
+    [SerializeField] private CharSprite rightSpeakerSprite;
+    [SerializeField] private CharSprite leftSpeakerSprite;
 
     [SerializeField] private GameObject DialogueContainer;
     [SerializeField] private GameObject ChoiceContainer;
@@ -26,23 +32,25 @@ public class DialogueManager : MonoBehaviour
     //DialogueData firstDialogue = null;
     private void Start()
     {
-        nextDialogue = PrepareDialogue(targetJsonFile);
+        //nextDialogue = PrepareDialogue(targetJsonFile);
 
-        foreach (Transform child in DialogueContainer.transform)
+        foreach (Transform child in DialogueContainer.transform) //Clear Mockup
         {
             Destroy(child.gameObject);
         }
-        foreach (Transform child in ChoiceContainer.transform)
+        foreach (Transform child in ChoiceContainer.transform) 
         {
             Destroy(child.gameObject);
         }
+
+        RunDialogue(targetJsonFile);
     }
 
     private void Update()
     {
-        if (!isSelectingChoice && Mouse.current.leftButton.wasPressedThisFrame)
+        if (!isSelectingChoice && isInDialog && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            RunDialogue(nextDialogue);
+            NextDialogue(nextDialogue);
         }
     }
 
@@ -59,7 +67,16 @@ public class DialogueManager : MonoBehaviour
     }
 
     //input = JsonFile / Output = head of dialogue linklist
-    public DialogueData PrepareDialogue(TextAsset jsonFile)
+    public void RunDialogue(TextAsset jsonFile)
+    {
+        isInDialog = true;
+
+        UIManager.Instance.Toggle_UI(EMainUI.MainMenu, false, 0.5f);
+        rightSpeakerSprite.PlayAnimation(EDialogueSpriteAnim.SlideIn);
+
+        NextDialogue(PrepareDialogue(jsonFile));
+    }
+    private DialogueData PrepareDialogue(TextAsset jsonFile)
     {
         DialogueData firstDialogue = null;
         DialogueList allNodes = JsonUtility.FromJson<DialogueList>(jsonFile.text);
@@ -136,14 +153,11 @@ public class DialogueManager : MonoBehaviour
         }
         return firstDialogue;
     }
-    public void RunDialogue(DialogueData targetDialouge)
+    public void NextDialogue(DialogueData targetDialouge)
     {
-
         if (targetDialouge == null)
         {
             EndDialogue();
-            isInDialog = false;
-            Debug.Log("End");
             return;
         }
 
@@ -152,9 +166,6 @@ public class DialogueManager : MonoBehaviour
             currentDialogueLine.FadeDown();
         }
 
-
-
-        isInDialog = true;
         Debug.Log("Run targetDialog -> " + targetDialouge.text);
 
         AddDialogueLine(targetDialouge.speaker, targetDialouge.text);
@@ -162,22 +173,37 @@ public class DialogueManager : MonoBehaviour
         //if that dialogue line come with choice
         if(targetDialouge.choices.Count != 0)
         {
-            foreach (var item in targetDialouge.choices)
-            {
-                AddChoice(item);
-            }
+            isSelectingChoice = true;
+            StartCoroutine(ShowChoice(targetDialouge));
         }
 
         nextDialogue = targetDialouge.nextNode;
     }
 
+    public IEnumerator ShowChoice(DialogueData targetDialouge)
+    {
+        yield return new WaitForSeconds(.5f);
+
+        foreach (var item in targetDialouge.choices)
+        {
+            AddChoice(item);
+        }
+
+        //yield return null;
+    }
+
     public void EndDialogue()
     {
+        Debug.Log("EndDialogue");
+        isInDialog = false;
+
+        rightSpeakerSprite.PlayAnimation(EDialogueSpriteAnim.SlideOut);
+        UIManager.Instance.Toggle_UI(EMainUI.MainMenu, true, 0.5f);
+
         foreach (Transform child in DialogueContainer.transform)
         {
             Destroy(child.gameObject);
         }
-        isInDialog = false;
     }
 
     public void AddDialogueLine(string speaker, string text)
@@ -188,7 +214,6 @@ public class DialogueManager : MonoBehaviour
 
     public void AddChoice(DialogueChoiceData choice)
     {
-        isSelectingChoice = true;
         DialogueChoice dialogueChoice = Instantiate(prefab_DialogueChoice, ChoiceContainer.transform);
         dialogueChoice.Setup(choice);
     }

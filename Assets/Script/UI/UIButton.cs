@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UIButton : MonoBehaviour
 {
-    [SerializeField] private EMenuBtn role = EMenuBtn.None;
+    [SerializeField] private EMainUI role = EMainUI.None;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,6 +17,6 @@ public class UIButton : MonoBehaviour
 
     public void OnClickBTN()
     {
-        UIManager.Instance.MenuToggle(role);
+        UIManager.Instance.AutoToggle_UI(role);
     }
 }

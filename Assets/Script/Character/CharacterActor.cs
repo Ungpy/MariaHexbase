@@ -16,14 +16,4 @@ public class CharacterActor : MonoBehaviour
     {
 
     }
-
-    private void OnMouseEnter()
-    {
-        UIManager.Instance.CreateEquipmentUI(charData);
-    }
-
-    private void OnMouseExit()
-    {
-        UIManager.Instance.DeleteEquipmentUI();
-    }
 }

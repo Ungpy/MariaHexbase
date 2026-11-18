@@ -10,7 +10,10 @@ public class MainCharacter : MonoBehaviour, IPointerEnterHandler
 
     private void Start()
     {
-        
+        if (OnStatChange != null)
+        {
+            OnStatChange(charData);
+        }
     }
 
     //private void OnMouseEnter()
@@ -21,10 +24,7 @@ public class MainCharacter : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (OnStatChange != null)
-        {
-            OnStatChange(charData);
-        }
+        
         //UIManager.Instance.StatsChange(charData);
         Debug.Log("MouseENter");
     }

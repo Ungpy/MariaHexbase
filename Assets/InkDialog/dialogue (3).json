@@ -1,0 +1,63 @@
+{
+  "startNode": "finding1",
+  "nodes": [
+    {
+      "id": "finding1",
+      "speaker": "Misa",
+      "text": "ตอนบ่ายมันร้อนขนาดนี้เลยเหรอเนี่ย กลับบ้านก่อนดีมั้ยนะ",
+      "jumpTo": null,
+      "choices": []
+    },
+    {
+      "id": "finding2",
+      "speaker": "Misa",
+      "text": "เอาไงดี ของก็ยังหาไม่เจอเลย",
+      "jumpTo": null,
+      "choices": [
+        {
+          "text": "กลับบ้าน",
+          "nextNodeId": "finding_home1"
+        },
+        {
+          "text": "หาต่อ",
+          "nextNodeId": "finding_con1"
+        }
+      ]
+    },
+    {
+      "id": "finding_home1",
+      "speaker": "Misa",
+      "text": "เอาล่ะ ไว้ค่อยมาใหม่ละกัน",
+      "jumpTo": "finding_end",
+      "choices": []
+    },
+    {
+      "id": "finding_con1",
+      "speaker": "Misa",
+      "text": "ไม่ล่ะ หาต่อดีกว่าเดี๋ยวตอนค่ำจะหายากกว่าเดิมอีก",
+      "jumpTo": null,
+      "choices": []
+    },
+    {
+      "id": "finding_con2",
+      "speaker": "Misa",
+      "text": "อีกหน่อยฉันเป็นลมแน่ๆ",
+      "jumpTo": null,
+      "choices": []
+    },
+    {
+      "id": "finding_con3",
+      "speaker": "Misa",
+      "text": "หวังว่าน้ำในกระเป๋าจะเหลือนะ",
+      "jumpTo": null,
+      "choices": []
+    },
+    {
+      "id": "finding_end",
+      "speaker": "Misa",
+      "text": "...",
+      "jumpTo": null,
+      "choices": []
+    }
+  ]
+}

@@ -39,6 +39,7 @@ public class TextBubble : MonoBehaviour
     [ContextMenu("FitText")]
     private void SetSize()
     {
+        //-----------------------Editor function---------------------------------------------------------------5814865147465srgpjewjpgjp
         //Awake();
         //Setup(dialogueText.text);
 
@@ -47,8 +48,9 @@ public class TextBubble : MonoBehaviour
         VerticalLayout = gameObject.GetComponent<VerticalLayoutGroup>();
         rectMask2D = gameObject.GetComponent<RectMask2D>();
 
-        Vector2 tmpSize = dialogueText.GetPreferredValues(dialogueText.text); ;
-        offset = new Vector2(VerticalLayout.padding.left + VerticalLayout.padding.right, VerticalLayout.padding.top + VerticalLayout.padding.bottom); ;
+        //Vector2 tmpSize = dialogueText.GetPreferredValues(dialogueText.text, dialogueText.GetComponent<LayoutElement>().maxWidth, Mathf.Infinity);
+        Vector2 tmpSize =  dialogueText.GetPreferredValues();
+        offset = new Vector2(VerticalLayout.padding.left + VerticalLayout.padding.right, VerticalLayout.padding.top + VerticalLayout.padding.bottom);
         preferredSize = tmpSize + offset;
 
 
@@ -140,7 +142,8 @@ public class TextBubble : MonoBehaviour
     public void Setup(string text)
     {
         //set up size of element (dialogue bubble)
-        Vector2 tmpSize = dialogueText.GetPreferredValues(text); ;
+        Vector2 tmpSize = dialogueText.GetPreferredValues(text, dialogueText.GetComponent<LayoutElement>().maxWidth, Mathf.Infinity);
+        //Vector2 tmpSize = dialogueText.GetPreferredValues(text);
         offset = new Vector2(VerticalLayout.padding.left + VerticalLayout.padding.right, VerticalLayout.padding.top + VerticalLayout.padding.bottom); ;
         preferredSize = tmpSize + offset;
         startSize = new Vector2(0f, 0f);
