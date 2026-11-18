@@ -24,6 +24,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextAsset targetJsonFile;
     private Dictionary<string, DialogueData> DialogueMap;
 
+    [SerializeField] private Dictionary<string, EDialogueSpriteAnim> DAnimMap; //ไปเพิ่มในหน้า inspcetor ด้วยตัวเองถ้าเพิ่ม enum ใหม่มา
+
     private DialogueLine currentDialogueLine;
     private DialogueData nextDialogue;
     bool isInDialog = false;
@@ -43,7 +45,7 @@ public class DialogueManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        RunDialogue(targetJsonFile);
+        //RunDialogue(targetJsonFile);
     }
 
     private void Update()
@@ -78,20 +80,19 @@ public class DialogueManager : MonoBehaviour
     }
     private DialogueData PrepareDialogue(TextAsset jsonFile)
     {
+        bool firstActive = true;
         DialogueData firstDialogue = null;
         DialogueList allNodes = JsonUtility.FromJson<DialogueList>(jsonFile.text);
-        bool firstActive = true;
-
-        Dictionary<string, DialogueData> TempAllDialogueRef = new Dictionary<string, DialogueData>();
 
         //For Assign Dialogue obj ref later
+        Dictionary<string, DialogueData> TempAllDialogueRef = new Dictionary<string, DialogueData>();
         Dictionary<DialogueData, string> Temp_AllJumptoID = new Dictionary<DialogueData, string>();
         Dictionary<DialogueChoiceData, string> Temp_AllNextNodeID = new Dictionary<DialogueChoiceData, string>();
 
         DialogueData previousData = null;
         foreach (var JsonNode in allNodes.nodes)
         {
-            DialogueData data = new DialogueData { id = JsonNode.id, speaker = JsonNode.speaker, text = JsonNode.text};
+            DialogueData data = new DialogueData { id = JsonNode.id, speaker = JsonNode.speaker, posIndex = JsonNode.posIndex, text = JsonNode.text};
             //Debug.Log("Added : " + data.text);
             TempAllDialogueRef.Add(data.id, data);
 
@@ -119,6 +120,11 @@ public class DialogueManager : MonoBehaviour
             {
                 //Debug.Log(JsonNode.id + " : " + JsonNode.jumpTo);
                 Temp_AllJumptoID.Add(data, JsonNode.jumpTo);
+            }
+
+            if (JsonNode.anim != "" && JsonNode.anim != null)
+            {
+                data.anim = DAnimMap[JsonNode.anim];
             }
 
 

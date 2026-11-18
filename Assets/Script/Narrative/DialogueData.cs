@@ -12,10 +12,12 @@ public class DialogueData
 {
     public string id;
     public string speaker;
+    public int posIndex;
     public string text;
     public string jumpToID;
     public DialogueData nextNode;
     public List<DialogueChoiceData> choices;
+    public EDialogueSpriteAnim anim;
 }
 
 [System.Serializable]
@@ -23,9 +25,11 @@ public class JsonDialogueData
 {
     public string id;
     public string speaker;
+    public int posIndex;
     public string text;
     public string jumpTo;
-    public List<JsonDialogueChoiceData> choices; 
+    public List<JsonDialogueChoiceData> choices;
+    public string anim;
 }
 
 [System.Serializable]

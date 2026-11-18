@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 public class CharSprite : MonoBehaviour
 {
     private Vector2 endPosition = new Vector2(7.27f, -2.2159f);
-    private Vector2 startPosition = new Vector2(10f, -2.2159f);
+    private Vector2 startPosition = new Vector2(11f, -2.2159f);
     public GameObject character ;
-    [SerializeField]
-    private AnimationCurve animC;
+    [SerializeField] private int posIndex;
+    [SerializeField] private AnimationCurve animC;
 
     float currentPercent;
     bool isKey = false;

@@ -11,7 +11,7 @@
     {
       "id": "finding2",
       "speaker": "Misa",
-      "text": "เอาไงดี ของก็ยังหาไม่เจอเลย",
+      "text": "แต่ว่า.. ของก็ยังหาไม่เจอเลยน่ะสิ",
       "jumpTo": null,
       "choices": [
         {
@@ -27,28 +27,28 @@
     {
       "id": "finding_home1",
       "speaker": "Misa",
-      "text": "เอาล่ะ ไว้ค่อยมาใหม่ละกัน",
+      "text": "เอาเถอะ ไว้ค่อยมาใหม่พรุ่งนี้",
       "jumpTo": "finding_end",
       "choices": []
     },
     {
       "id": "finding_con1",
       "speaker": "Misa",
-      "text": "ไม่ล่ะ หาต่อดีกว่าเดี๋ยวตอนค่ำจะหายากกว่าเดิมอีก",
+      "text": "ไม่ล่ะ ต้องรีบหาก่อนที่จะค่ำ",
       "jumpTo": null,
       "choices": []
     },
     {
       "id": "finding_con2",
       "speaker": "Misa",
-      "text": "อีกหน่อยฉันเป็นลมแน่ๆ",
+      "text": "แต่แดดแบบนี้ฉันได้เป็นลมแน่ๆ",
       "jumpTo": null,
       "choices": []
     },
     {
       "id": "finding_con3",
       "speaker": "Misa",
-      "text": "หวังว่าน้ำในกระเป๋าจะเหลือนะ",
+      "text": "หวังว่าน้ำในกระเป๋าจะเหลือนะ..",
       "jumpTo": null,
       "choices": []
     },
